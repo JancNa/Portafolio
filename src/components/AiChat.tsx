@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import { ContactForm } from "./ContactForm";
 import { ProjectCard } from "./ProjectCard";
 import { supabase } from "../lib/supabase";
+import { patchProject, patchProjects } from "../lib/projectUtils";
 
 // --- Tipos ---
 type Message = {
@@ -399,8 +400,9 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
             console.error("Error loading projects:", error);
             setMessages(prev => prev.map(msg => msg.id === newMsgId ? {...msg, items: []} : msg));
         } else {
+            const patchedProjects = patchProjects(projects);
             // Functional update ensures we work with the most recent messages
-            setMessages(prev => prev.map(msg => msg.id === newMsgId ? {...msg, items: projects} : msg));
+            setMessages(prev => prev.map(msg => msg.id === newMsgId ? {...msg, items: patchedProjects} : msg));
         }
     }
     
@@ -412,7 +414,8 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
         .single()
         
         if (project) {
-            setMessages(prev => prev.map(msg => msg.id === newMsgId ? {...msg, item: project} : msg))
+            const patchedProject = patchProject(project);
+            setMessages(prev => prev.map(msg => msg.id === newMsgId ? {...msg, item: patchedProject} : msg))
         }
     }
     

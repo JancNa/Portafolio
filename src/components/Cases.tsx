@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import { ProjectCardSkeleton } from "./ProjectCardSkeleton";
 
+import { patchProjects } from "../lib/projectUtils";
+
 interface Case {
   id: string;
   title: string;
@@ -41,7 +43,9 @@ export function Cases({ items }: CasesProps) {
         .order('sort_order', { ascending: true });
       
       if (data) {
-        setCases(data.map(c => ({
+        console.log("Projects data from Supabase:", data);
+        const patchedData = patchProjects(data);
+        setCases(patchedData.map(c => ({
             id: c.id,
             title: c.title,
             tags: c.tags || [],
