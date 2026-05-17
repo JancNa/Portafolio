@@ -3,6 +3,7 @@ import { Moon, Sun, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../lib/utils";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -59,14 +60,16 @@ export function Navbar() {
           className="max-w-7xl mx-auto w-full flex items-center justify-between gap-8 md:gap-16"
           transition={{ layout: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }}
         >
-        <motion.a layout href="/" className="shrink-0 block" transition={{ layout: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }}>
-          <img 
-            src="https://fmigvcjlgrhgicyawiyq.supabase.co/storage/v1/object/sign/Assets/Logo%20navbar.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9iMzI1NDE1Mi1hMjA5LTRhOWUtYWQxYS05ZDYxMTI1ZDc5NmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJBc3NldHMvTG9nbyBuYXZiYXIucG5nIiwiaWF0IjoxNzc2NzM5ODQxLCJleHAiOjE4MDgyNzU4NDF9.OkKJucAe4EDknoq8qH5lM8kmK5e6vYGa0XdVjsSF8PM" 
-            alt="Jorge Naranjo Logo" 
-            className="h-10 w-auto" 
-            referrerPolicy="no-referrer"
-          />
-        </motion.a>
+        <motion.div layout transition={{ layout: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }}>
+          <Link to="/" className="shrink-0 block">
+            <img 
+              src="https://fmigvcjlgrhgicyawiyq.supabase.co/storage/v1/object/sign/Assets/Logo%20navbar.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9iMzI1NDE1Mi1hMjA5LTRhOWUtYWQxYS05ZDYxMTI1ZDc5NmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJBc3NldHMvTG9nbyBuYXZiYXIucG5nIiwiaWF0IjoxNzc2NzM5ODQxLCJleHAiOjE4MDgyNzU4NDF9.OkKJucAe4EDknoq8qH5lM8kmK5e6vYGa0XdVjsSF8PM" 
+              alt="Jorge Naranjo Logo" 
+              className="h-10 w-auto" 
+              referrerPolicy="no-referrer"
+            />
+          </Link>
+        </motion.div>
 
         {/* Desktop Links */}
         <motion.div layout className="flex items-center gap-6" transition={{ layout: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }}>
