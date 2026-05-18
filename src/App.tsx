@@ -4,7 +4,7 @@
  */
 
 import { ThemeProvider } from "./ThemeContext";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { Principles } from "./components/Principles";
@@ -17,7 +17,7 @@ import { NotFound } from "./pages/NotFound";
 export default function App() {
   return (
     <ThemeProvider defaultTheme="system" storageKey="jnaranjo-portfolio-theme">
-      <HashRouter>
+      <BrowserRouter basename="/Portafolio">
         <div className="min-h-screen selection:bg-accent selection:text-white">
           <Routes>
             <Route path="/" element={
@@ -37,7 +37,7 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
-      </HashRouter>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
