@@ -72,7 +72,7 @@ export function Cases({ items }: CasesProps) {
     </section>
   );
   return (
-    <section id="proyectos" className="py-24 relative overflow-x-hidden bg-muted/40">
+    <section id="proyectos" className="pt-96 py-24 relative overflow-x-hidden bg-muted/40">
       <div className="container mx-auto px-6">
         {!items && (
           <motion.div 

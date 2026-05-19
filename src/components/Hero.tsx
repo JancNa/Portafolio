@@ -24,7 +24,7 @@ export function Hero() {
       )}
     >
       {/* Background container */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-background">
+      <div className="absolute inset-0 z-0 pointer-events-none">
         
         {/* Subtle Side Glows */}
         <div className="absolute top-1/2 -left-1/4 md:-left-[10%] -translate-y-1/2 w-[50vw] h-[50vw] bg-[#a855f7]/[0.10] dark:bg-[#a855f7]/[0.05] rounded-full blur-[100px] md:blur-[140px] mix-blend-normal" />

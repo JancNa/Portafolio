@@ -11,11 +11,11 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { name: "Visión", href: "/#principios", type: "anchor" },
-    { name: "Proyectos", href: "/#proyectos", type: "anchor" },
-    { name: "Metodología", href: "/#metodología", type: "anchor" },
-    { name: "Experiencia", href: "/#experiencia", type: "anchor" },
-    { name: "404", href: "/404", type: "link" }
+    { name: "Visión", href: "#vision" },
+    { name: "Proyectos", href: "#proyectos" },
+    { name: "Metodología", href: "#metodología" },
+    { name: "Experiencia", href: "#experiencia" },
+    { name: "404", href: "/404" }
   ];
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export function Navbar() {
           <ul className="hidden md:flex items-center gap-8 text-sm font-medium">
             {navItems.map((item) => (
               <li key={item.name}>
-                {item.type === "link" ? (
+                {item.href.startsWith('/') ? (
                   <Link to={item.href} className="text-muted-foreground hover:text-foreground transition-all relative group flex items-center py-2">
                     {item.name}
                     <span className="absolute -bottom-0.5 left-0 w-0 h-[1.5px] bg-gradient-to-r from-[#a855f7] to-[#ea580c] transition-all group-hover:w-full" />
@@ -129,7 +129,7 @@ export function Navbar() {
             <ul className="flex flex-col p-6 gap-4">
               {navItems.map((item) => (
                 <li key={item.name}>
-                  {item.type === "link" ? (
+                  {item.href.startsWith('/') ? (
                     <Link 
                       to={item.href} 
                       className="text-lg font-medium text-foreground block py-2"
