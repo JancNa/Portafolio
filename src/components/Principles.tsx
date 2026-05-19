@@ -72,7 +72,7 @@ export function Principles() {
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
-    <section id="vision" ref={containerRef} className="pt-10 lg:pt-32 pb-4 lg:pb-0 relative text-foreground z-10 overflow-visible flex flex-col lg:block lg:min-h-[600px]">
+    <section id="vision" ref={containerRef} className="pt-10 lg:pt-32 pb-4 lg:pb-0 relative text-foreground z-10 overflow-x-hidden flex flex-col lg:block lg:min-h-[600px]">
       {/* Background container for glow effects */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <motion.div 

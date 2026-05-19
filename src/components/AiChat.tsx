@@ -515,7 +515,7 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
             exit={{ opacity: 0, transition: { duration: 0.8 } }}
             transition={{ delay: 0.7, duration: 0.8 }}
             ref={scrollRef} 
-            className="flex-1 overflow-y-auto w-full scroll-smooth min-h-0 relative flex flex-col"
+            className="flex-1 overflow-y-auto w-full scroll-smooth min-h-0 relative flex flex-col scrollbar-hide"
           >
             <div className={cn("w-[90%] mx-auto py-6 px-0 space-y-8 flex-1 flex flex-col justify-end transition-all duration-300", blockInfo.isBlocked ? "pb-16" : "pb-6")}>
               <div className="flex-1" /> 

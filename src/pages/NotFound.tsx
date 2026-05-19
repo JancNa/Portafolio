@@ -8,7 +8,7 @@ import { StarsBackground } from "../components/ui/stars-background";
 
 export function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground relative">
+    <div className="min-h-screen flex flex-col bg-background text-foreground relative overflow-x-hidden">
       <div className="relative z-50">
         <Navbar />
       </div>
