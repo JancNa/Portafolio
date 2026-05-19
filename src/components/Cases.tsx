@@ -59,7 +59,7 @@ export function Cases({ items }: CasesProps) {
   }, [items]);
 
   if (loading) return (
-    <section id="proyectos" className="py-24 relative overflow-x-hidden bg-muted/40">
+    <section id="proyectos" className="pt-[250px] pb-24 relative overflow-x-hidden bg-muted/40">
       <div className="container mx-auto px-6">
         <div className="mb-16">
             <div className="h-4 w-32 bg-gray-200 dark:bg-gray-800 animate-pulse rounded mb-4" />
@@ -72,7 +72,7 @@ export function Cases({ items }: CasesProps) {
     </section>
   );
   return (
-    <section id="proyectos" className="pt-96 py-24 relative overflow-x-hidden bg-muted/40">
+    <section id="proyectos" className="pt-[250px] pb-24 relative overflow-x-hidden bg-muted/40">
       <div className="container mx-auto px-6">
         {!items && (
           <motion.div 
