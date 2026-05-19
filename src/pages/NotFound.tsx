@@ -28,16 +28,16 @@ export function NotFound() {
         <div className="w-full flex flex-col items-center justify-center gap-4 text-center flex-1 md:mt-[150px] mt-0">
             
             {/* Top section: 404 stacked and centered */}
-            <div className="relative flex items-center justify-center w-full min-h-[20vh] md:min-h-[28vh] overflow-hidden">
+            <div className="relative flex items-center justify-center w-full min-h-[20vh] md:min-h-[28vh] ">
                 {/* Giant 404 */}
-                <div className="absolute inset-0 flex items-center justify-center font-black italic tracking-tighter leading-none select-none text-[10rem] sm:text-[15rem] md:text-[21rem] lg:text-[27rem] xl:text-[32rem] pointer-events-none z-0">
+                <div className="absolute inset-0 flex items-center justify-center font-black italic tracking-tighter leading-none select-none text-[8rem] sm:text-[12rem] md:text-[21rem] lg:text-[27rem] xl:text-[32rem] pointer-events-none z-0">
                     <div className="relative w-full h-full flex items-center justify-center opacity-90 drop-shadow-[0_0_15px_rgba(234,88,12,0.15)] dark:drop-shadow-[0_0_25px_rgba(168,85,247,0.3)]">
                         {/* Stroke text */}
-                        <span className="absolute text-stroke-gradient-404 pl-2 pr-12 md:pr-20 pointer-events-none select-none z-0">
+                        <span className="absolute text-stroke-gradient-404 px-4 pointer-events-none select-none z-0">
                             404
                         </span>
                         {/* Fill text */}
-                        <span className="absolute text-background pl-2 pr-12 md:pr-20 pointer-events-none select-none z-10">
+                        <span className="absolute text-background px-4 pointer-events-none select-none z-10">
                             404
                         </span>
                     </div>

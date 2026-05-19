@@ -85,8 +85,10 @@ export function Cases({ items }: CasesProps) {
               <h2 className="text-sm font-mono tracking-widest uppercase text-muted-foreground mb-4">Trabajo Reciente</h2>
               <h3 className="text-4xl md:text-5xl font-serif">Proyectos e Impacto</h3>
             </div>
-            <button className="hidden md:flex items-center gap-2 text-sm font-medium px-6 py-3 border border-border rounded-full hover:bg-muted transition-colors group/all">
-              Ver Todos los Proyectos <ArrowUpRight size={16} className="group-hover/all:translate-x-0.5 group-hover/all:-translate-y-0.5 transition-transform" />
+            <button className="footer-gradient-button hidden md:inline-flex items-center gap-2 text-sm font-medium px-8 py-3 rounded-full hover:bg-muted transition-all group/all">
+              <span className="relative z-10 flex items-center gap-2">
+                Ver Todos los Proyectos <ArrowUpRight size={16} className="group-hover/all:translate-x-0.5 group-hover/all:-translate-y-0.5 transition-transform" />
+              </span>
             </button>
           </motion.div>
         )}
@@ -139,8 +141,10 @@ export function Cases({ items }: CasesProps) {
         
         {!items && (
           <div className="mt-12 md:hidden">
-              <button className="w-full flex items-center justify-center gap-2 text-sm font-medium hover:bg-muted transition-colors py-3 border border-border rounded-full group/mob">
-                Ver Todos los Proyectos <ArrowUpRight size={16} className="group-hover/mob:translate-x-0.5 group-hover/mob:-translate-y-0.5 transition-transform" />
+              <button className="footer-gradient-button w-full flex items-center justify-center gap-2 text-sm font-medium hover:bg-muted transition-all py-4 rounded-full group/mob">
+                <span className="relative z-10 flex items-center gap-2">
+                  Ver Todos los Proyectos <ArrowUpRight size={16} className="group-hover/mob:translate-x-0.5 group-hover/mob:-translate-y-0.5 transition-transform" />
+                </span>
               </button>
           </div>
         )}

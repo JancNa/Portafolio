@@ -13,10 +13,30 @@ export function Navbar() {
   const navItems = [
     { name: "Visión", href: "#vision" },
     { name: "Proyectos", href: "#proyectos" },
-    { name: "Metodología", href: "#metodología" },
+    { name: "Metodología", href: "#metodologia" },
     { name: "Experiencia", href: "#experiencia" },
     { name: "404", href: "/404" }
   ];
+
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const id = href.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        // Offset for navbar height
+        const navbarHeight = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+        setMobileMenuOpen(false);
+      }
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -82,7 +102,11 @@ export function Navbar() {
                     <span className="absolute -bottom-0.5 left-0 w-0 h-[1.5px] bg-gradient-to-r from-[#a855f7] to-[#ea580c] transition-all group-hover:w-full" />
                   </Link>
                 ) : (
-                  <a href={item.href} className="text-muted-foreground hover:text-foreground transition-all relative group flex items-center py-2">
+                  <a 
+                    href={item.href} 
+                    onClick={(e) => scrollToSection(e, item.href)}
+                    className="text-muted-foreground hover:text-foreground transition-all relative group flex items-center py-2"
+                  >
                     {item.name}
                     <span className="absolute -bottom-0.5 left-0 w-0 h-[1.5px] bg-gradient-to-r from-[#a855f7] to-[#ea580c] transition-all group-hover:w-full" />
                   </a>
@@ -141,7 +165,7 @@ export function Navbar() {
                     <a 
                       href={item.href} 
                       className="text-lg font-medium text-foreground block py-2"
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={(e) => scrollToSection(e, item.href)}
                     >
                       {item.name}
                     </a>

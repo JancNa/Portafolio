@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 
 export function Methodology() {
   return (
-    <section id="metodología" className="py-24 border-t border-border">
+    <section id="metodologia" className="py-24 border-t border-border">
       <div className="container mx-auto px-6">
         <div className="mb-16">
           <h2 className="text-4xl md:text-5xl font-serif max-w-2xl mb-6 leading-tight">
