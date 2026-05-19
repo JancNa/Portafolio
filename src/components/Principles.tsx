@@ -72,9 +72,9 @@ export function Principles() {
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
-    <section id="vision" ref={containerRef} className="pt-10 lg:pt-32 pb-4 lg:pb-0 relative text-foreground z-10 overflow-x-hidden flex flex-col lg:block lg:min-h-[600px]">
-      {/* Background container for glow effects */}
-      <div className="absolute inset-0 pointer-events-none z-0">
+    <section id="vision" ref={containerRef} className="pt-10 lg:pt-32 pb-4 lg:pb-0 relative text-foreground z-10 overflow-visible flex flex-col lg:block lg:min-h-[600px] w-full">
+      {/* Background container for glow effects - clipped to parent to prevent horizontal scroll */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <motion.div 
           style={{ y: y1 }}
           className="absolute top-0 -left-[10%] w-[50vw] h-[50vw] max-w-[640px] max-h-[600px] bg-[#a855f7]/[0.10] dark:bg-[#a855f7]/[0.05] rounded-full blur-[100px] mix-blend-normal" 
@@ -172,7 +172,7 @@ export function Principles() {
       </div>
 
       {/* Bottom Section: Cards (Centradas en el borde inferior) */}
-      <div className="container mx-auto px-6 max-w-7xl absolute bottom-0 left-0 right-0 z-20 transform translate-y-1/2">
+      <div className="w-full px-6 max-w-7xl absolute bottom-0 left-1/2 -translate-x-1/2 z-20 transform translate-y-1/2">
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
