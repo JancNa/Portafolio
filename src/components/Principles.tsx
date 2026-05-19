@@ -74,7 +74,7 @@ export function Principles() {
   return (
     <section id="vision" ref={containerRef} className="pt-10 lg:pt-32 pb-4 lg:pb-0 relative text-foreground z-10 overflow-visible flex flex-col lg:block lg:min-h-[600px]">
       {/* Background container for glow effects */}
-      <div className="absolute inset-0 pointer-events-none z-0">
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <motion.div 
           style={{ y: y1 }}
           className="absolute top-0 -left-[10%] w-[50vw] h-[50vw] max-w-[640px] max-h-[600px] bg-[#a855f7]/[0.10] dark:bg-[#a855f7]/[0.05] rounded-full blur-[100px] mix-blend-normal" 
@@ -178,7 +178,7 @@ export function Principles() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="grid grid-cols-2 md:grid-cols-4 rounded-[2rem] border border-border bg-white/5 shadow-2xl overflow-hidden"
+          className="grid grid-cols-2 md:grid-cols-4 rounded-[2rem] border border-border divide-x divide-y md:divide-y-0 md:divide-x divide-border bg-white/5 shadow-2xl overflow-hidden"
         >
           {principles.map((p, i) => (
             <div

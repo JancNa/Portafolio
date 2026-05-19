@@ -18,7 +18,7 @@ export default function App() {
   return (
     <ThemeProvider defaultTheme="system" storageKey="jnaranjo-portfolio-theme">
       <HashRouter>
-        <div className="min-h-screen selection:bg-accent selection:text-white">
+        <div className="min-h-screen selection:bg-accent selection:text-white overflow-x-hidden">
           <Routes>
             <Route path="/" element={
               <>
