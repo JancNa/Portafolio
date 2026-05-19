@@ -25,10 +25,10 @@ export function NotFound() {
       </div>
 
       <div className="flex-grow flex flex-col items-center justify-center p-6 md:p-12 relative z-10 pt-24 md:pt-32">
-        <div className="w-full flex flex-col items-center justify-center gap-4 text-center flex-1">
+        <div className="w-full flex flex-col items-center justify-center gap-4 text-center flex-1 md:mt-[150px] mt-0">
             
-            {/* Top section: 404 and Character stacked and centered */}
-            <div className="relative flex items-center justify-center w-full min-h-[40vh] md:min-h-[50vh] overflow-x-visible">
+            {/* Top section: 404 stacked and centered */}
+            <div className="relative flex items-center justify-center w-full min-h-[20vh] md:min-h-[28vh] overflow-x-visible">
                 {/* Giant 404 */}
                 <div className="absolute inset-0 flex items-center justify-center font-black italic tracking-tighter leading-none select-none text-[10rem] sm:text-[15rem] md:text-[21rem] lg:text-[27rem] xl:text-[32rem] pointer-events-none z-0">
                     <div className="relative w-full h-full flex items-center justify-center opacity-90 drop-shadow-[0_0_15px_rgba(234,88,12,0.15)] dark:drop-shadow-[0_0_25px_rgba(168,85,247,0.3)]">
@@ -42,38 +42,41 @@ export function NotFound() {
                         </span>
                     </div>
                 </div>
-
-                {/* Character image */}
-                <motion.div
-                    initial={{ scale: 0.8, opacity: 0, y: 20 }}
-                    animate={{ scale: 1, opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="absolute bottom-0 z-20 flex justify-center items-end pointer-events-none"
-                >
-                    <img 
-                        src="https://fmigvcjlgrhgicyawiyq.supabase.co/storage/v1/object/sign/Assets/Axi404.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9iMzI1NDE1Mi1hMjA5LTRhOWUtYWQxYS05ZDYxMTI1ZDc5NmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJBc3NldHMvQXhpNDA0LnBuZyIsImlhdCI6MTc3NzUxMzQxOCwiZXhwIjoxNzgwMTA1NDE4fQ.ogDk8veV1Sr50B_Akx1K_7XRmPPd0WEbzUMaP69AorM" 
-                        alt="Character" 
-                        className="max-w-[none] w-[319px] sm:w-[418px] md:w-[638px] lg:w-[770px] xl:w-[858px] h-auto object-contain object-bottom drop-shadow-[0_40px_100px_rgba(0,0,0,0.5)]"
-                    />
-                </motion.div>
             </div>
 
-            {/* Bottom section: Text Content */}
-            <div className="relative z-20 max-w-4xl px-4 mt-8 md:mt-16">
-                <h3 className="text-[40px] font-serif mb-6 leading-tight font-bold">
-                    ¡Ups! Parece que esta página se fue de vacaciones
-                </h3>
-                <p className="text-base text-muted-foreground mb-10">
-                    El pequeño amigo parece haber garabateado la dirección. No podemos encontrar la página que buscas.
-                </p>
-                <Link 
-                    to="/" 
-                    className="footer-gradient-button inline-flex items-center gap-3 font-medium text-foreground py-4 px-10 rounded-full"
-                >
-                    <span className="relative z-10 flex items-center gap-3 text-lg">
-                      <ArrowLeft size={22} /> Volver al Inicio
-                    </span>
-                </Link>
+            <div className="relative z-20 max-w-6xl px-4 -mt-24 sm:-mt-36 md:-mt-44">
+                <div className="flex flex-col-reverse md:flex-row items-center md:items-end justify-center gap-8 md:gap-16">
+                    <div className="text-center md:text-left max-w-xl">
+                        <h3 className="text-[32px] sm:text-[40px] font-serif mb-6 leading-tight font-bold">
+                            ¡Ups! Parece que esta página se fue de vacaciones
+                        </h3>
+                        <p className="text-base text-muted-foreground mb-10">
+                            El pequeño amigo parece haber garabateado la dirección. No podemos encontrar la página que buscas.
+                        </p>
+                        <Link 
+                            to="/" 
+                            className="footer-gradient-button inline-flex items-center gap-3 font-medium text-foreground py-4 px-10 rounded-full"
+                        >
+                            <span className="relative z-10 flex items-center gap-3 text-lg">
+                              <ArrowLeft size={22} /> Volver al Inicio
+                            </span>
+                        </Link>
+                    </div>
+                    
+                    <motion.div
+                        initial={{ scale: 0.8, opacity: 0, x: 20 }}
+                        animate={{ scale: 1, opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                        className="relative shrink-0 z-50 md:-ml-20 md:-mb-2"
+                    >
+                        <img 
+                            src="https://fmigvcjlgrhgicyawiyq.supabase.co/storage/v1/object/sign/Assets/Axi404.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9iMzI1NDE1Mi1hMjA5LTRhOWUtYWQxYS05ZDYxMTI1ZDc5NmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJBc3NldHMvQXhpNDA0LnBuZyIsImlhdCI6MTc3OTE2NDE4NSwiZXhwIjoyMDk0NTI0MTg1fQ.5-42OJpMZ6NzB3hSPjOQa41x-YbuDH62IaiYyr9wKEM" 
+                            alt="Axi 404" 
+                            className="w-[336px] sm:w-[336px] md:w-[432px] lg:w-[600px] h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)]"
+                            referrerPolicy="no-referrer"
+                        />
+                    </motion.div>
+                </div>
             </div>
         </div>
       </div>

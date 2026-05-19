@@ -74,7 +74,7 @@ export function Principles() {
   return (
     <section id="vision" ref={containerRef} className="pt-10 lg:pt-32 pb-4 lg:pb-0 relative text-foreground z-10 overflow-visible flex flex-col lg:block lg:min-h-[600px]">
       {/* Background container for glow effects */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none z-0">
         <motion.div 
           style={{ y: y1 }}
           className="absolute top-0 -left-[10%] w-[50vw] h-[50vw] max-w-[640px] max-h-[600px] bg-[#a855f7]/[0.10] dark:bg-[#a855f7]/[0.05] rounded-full blur-[100px] mix-blend-normal" 

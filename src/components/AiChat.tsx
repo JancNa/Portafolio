@@ -216,8 +216,26 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const sessionIdRef = useRef<string | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const AI_AVATAR_URL = "https://fmigvcjlgrhgicyawiyq.supabase.co/storage/v1/object/sign/Assets/Axi%20pensando.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9iMzI1NDE1Mi1hMjA5LTRhOWUtYWQxYS05ZDYxMTI1ZDc5NmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJBc3NldHMvQXhpIHBlbnNhbmRvLnBuZyIsImlhdCI6MTc3OTE2MzM4OSwiZXhwIjoyMDk0NTIzMzg5fQ.LNo-7N9wWMAurHPF4IDwrEfYkzwy9NRs1SOSNgwlZZo";
 
   const FUNCTIONS_URL = 'https://fmigvcjlgrhgicyawiyq.supabase.co/functions/v1/chat';
+
+  // Preload avatar
+  useEffect(() => {
+    const img = new Image();
+    img.src = AI_AVATAR_URL;
+  }, []);
+
+  // Auto-resize textarea
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      const newHeight = textareaRef.current.scrollHeight;
+      textareaRef.current.style.height = `${newHeight}px`;
+    }
+  }, [input, isExpanded]);
 
   useEffect(() => {
     const handleUnload = () => {
@@ -513,10 +531,19 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
                     )}
                   >
                     <div className={cn(
-                      "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1 avatar-gradient-border shadow-sm",
+                      "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1 avatar-gradient-border shadow-sm overflow-hidden",
                       "bg-white dark:bg-black"
                     )}>
-                      {message.role === "user" ? <User size={14} className="text-foreground" /> : <Bot size={14} className="text-foreground" />}
+                      {message.role === "user" ? (
+                        <User size={14} className="text-foreground relative z-10" />
+                      ) : (
+                        <img 
+                          src={AI_AVATAR_URL} 
+                          alt="AI Avatar" 
+                          className="w-full h-full object-cover scale-[0.95] rounded-full"
+                          referrerPolicy="no-referrer"
+                        />
+                      )}
                     </div>
                     <div className={cn(
                       "px-5 py-3 text-base leading-relaxed tracking-tight max-w-full",
@@ -592,8 +619,13 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
                     className="flex items-start gap-4 max-w-[95%]"
                   >
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white dark:bg-black avatar-gradient-border flex items-center justify-center mt-1 shadow-sm relative overflow-visible">
-                      <div className="ai-loader-spinner"><div className="ai-loader-spinner-in"></div></div>
-                      <Bot size={14} className="text-foreground" />
+                      <div className="ai-loader-spinner z-10"><div className="ai-loader-spinner-in"></div></div>
+                      <img 
+                        src={AI_AVATAR_URL} 
+                        alt="AI Avatar" 
+                        className="w-full h-full object-cover scale-[0.95] rounded-full"
+                        referrerPolicy="no-referrer"
+                      />
                     </div>
                   </motion.div>
                 )}
@@ -668,12 +700,22 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
                   <div className="bg-destructive/20 p-2 rounded-full relative shrink-0">
                     <Clock size={16} className="text-destructive" />
                   </div>
-                  <div className="flex-1 space-y-1.5 relative pr-6">
-                     <p className="text-[13px] font-medium leading-tight text-foreground">Sesión bloqueada: detecté que intentaste llevarme fuera de mis protocolos… pero este no es ese tipo de AI.</p>
-                     <p className="text-[11px] font-mono font-semibold tracking-wider text-destructive uppercase flex items-center gap-1.5 mb-[10px] opacity-50">
-                        <span>{blockInfo.remainingMinutes.toString().padStart(2, '0')}:{blockInfo.remainingSeconds.toString().padStart(2, '0')}</span> 
-                        <span className="text-destructive/70">restantes</span>
-                     </p>
+                  <div className="flex-1 flex gap-4 items-center">
+                    <div className="space-y-1.5 relative">
+                       <p className="text-[13px] font-medium leading-tight text-foreground">Sesión bloqueada: detecté que intentaste llevarme fuera de mis protocolos… pero este no es ese tipo de AI.</p>
+                       <p className="text-[11px] font-mono font-semibold tracking-wider text-destructive uppercase flex items-center gap-1.5 mb-[10px] opacity-50">
+                          <span>{blockInfo.remainingMinutes.toString().padStart(2, '0')}:{blockInfo.remainingSeconds.toString().padStart(2, '0')}</span> 
+                          <span className="text-destructive/70">restantes</span>
+                       </p>
+                    </div>
+                    <div className="shrink-0 w-14 h-14 relative -mt-3">
+                      <img 
+                        src={AI_AVATAR_URL} 
+                        alt="Axi thinking" 
+                        className="w-full h-full object-contain scale-[1.4]"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
                   </div>
                   
                   <button
@@ -694,28 +736,28 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
               className="w-full flex items-center relative min-h-[60px] px-1 sm:px-2"
             >
               <textarea
+                ref={textareaRef}
                 rows={1}
                 className={cn(
-                  "flex-1 bg-transparent focus:outline-none transition-all text-foreground resize-none pl-4 pr-[130px] sm:pr-[140px] py-[18px] max-h-[160px] scrollbar-hide block leading-relaxed placeholder:text-muted-foreground/70 placeholder:transition-colors min-w-0",
+                  "flex-1 bg-transparent focus:outline-none transition-colors text-foreground resize-none pl-4 pr-[100px] sm:pr-[140px] py-[18px] max-h-[160px] scrollbar-hide block leading-relaxed placeholder:text-muted-foreground/70 placeholder:transition-colors min-w-0",
                   isExpanded ? "text-sm" : "text-base"
                 )}
-                placeholder="Pregúntale a la AI de Jorge..."
+                placeholder="Pregunta algo..."
                 value={input}
-                onChange={(e) => {
-                  setInput(e.target.value);
-                  e.target.style.height = "auto";
-                  e.target.style.height = `${e.target.scrollHeight}px`;
-                }}
+                onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
-                    e.currentTarget.style.height = "auto";
                     handleSend();
                   }
                 }}
                 onFocus={() => {
                   setIsInputFocused(true);
                   if (messages.length > 0 && !isExpanded) onChatStart?.();
+                  if (textareaRef.current) {
+                    textareaRef.current.style.height = "auto";
+                    textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+                  }
                 }}
                 onBlur={() => setIsInputFocused(false)}
                 disabled={isLoading || blockInfo.isBlocked}
