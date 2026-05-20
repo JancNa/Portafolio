@@ -1,27 +1,11 @@
 import { motion } from "motion/react";
-
-const roles = [
-  {
-    period: "2022 — Presente",
-    title: "Lead Product Designer & Strategist",
-    company: "Varias (Consultoría & Proyectos de Alta Complejidad)",
-    description: "Liderando iniciativas end-to-end: desde el Product Discovery estratégico hasta la arquitectura global de sistemas, operando como socio consultivo en transformación digital e innovación guiada por AI."
-  },
-  {
-    period: "2019 — 2022",
-    title: "Sr. UX/UI Designer → Product Design Lead",
-    company: "Empresas Tecnológicas Clave",
-    description: "Rediseño de flujos core y escalabilidad de Design Systems. Colaboración profunda con equipos de ingeniería para mantener consistencia en ciclos ágiles de entrega."
-  },
-  {
-    period: "2016 — 2019",
-    title: "Digital Designer",
-    company: "Agencias & Startups B2C",
-    description: "Elaboración de cimientos visuales y de interacción. Un enfoque temprano en la retención, gamificación y la estética vinculada a resultados de marca y engagement."
-  }
-];
+import { useLanguage } from "../i18n/LanguageContext";
 
 export function Experience() {
+  const { t } = useLanguage();
+  
+  const roles = t('experience.roles');
+
   return (
     <section id="experiencia" className="py-24 bg-muted/10 border-t border-border/50">
       <div className="container mx-auto px-6 max-w-5xl">
@@ -31,12 +15,12 @@ export function Experience() {
           viewport={{ once: true }}
           className="mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-serif mb-4">Evolución & Track Record</h2>
-          <p className="text-muted-foreground">Un camino orientado al impacto a través de diseño riguroso y visión de producto sistémica.</p>
+          <h2 className="text-4xl md:text-5xl font-serif mb-4">{t('experience.title')}</h2>
+          <p className="text-muted-foreground">{t('experience.subtitle')}</p>
         </motion.div>
 
         <div className="space-y-12">
-          {roles.map((role, i) => (
+          {roles.map((role: any, i: number) => (
             <motion.div 
               key={i}
               initial={{ opacity: 0, x: -20 }}

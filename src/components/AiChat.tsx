@@ -7,6 +7,8 @@ import { ContactForm } from "./ContactForm";
 import { ProjectCard } from "./ProjectCard";
 import { supabase } from "../lib/supabase";
 import { patchProject, patchProjects } from "../lib/projectUtils";
+import { useLanguage } from "../i18n/LanguageContext";
+import { tProjectField, type PortfolioProject } from "./Cases";
 
 // --- Tipos ---
 type Message = {
@@ -14,12 +16,13 @@ type Message = {
   role: "user" | "model";
   text: string;
   type?: 'text' | 'projects' | 'contact' | 'project_detail' | 'component';
-  component?: 'contact';
-  items?: any[];
-  item?: any;
+  component?: 'contact' | 'cases.tsx';
+  items?: PortfolioProject[];
+  item?: PortfolioProject;
   form?: any;
-  project?: any;
+  project?: PortfolioProject;
   modelUsed?: string;
+  lang?: 'es' | 'en';
 };
 
 // --- Helpers de comunicación ---
@@ -64,16 +67,6 @@ const updateHistory = (
     { role: "assistant", content: assistantResponse.message }
   ].slice(-6)
 }
-
-const QUICK_PROMPTS = [
-  "¿Qué hace Jorge?",
-  "Ver experiencia",
-  "Ver proyectos",
-  "Descargar CV",
-  "¿Cómo usa AI?",
-  "¿Está disponible?",
-  "Contactar"
-];
 
 const boxVariants: Variants = {
   hidden: { clipPath: "inset(49.5% 50% 49.5% 50% round 16px)", opacity: 0 },
@@ -148,10 +141,11 @@ interface AiChatProps {
   isExpanded?: boolean;
   onChatStart?: () => void;
   onChatClose?: () => void;
+  onLangChange?: (lang: 'es' | 'en') => void;
 }
 
 // --- Componentes Internos ---
-function ProjectCarousel({ items }: { items: any[] }) {
+function ProjectCarousel({ items, lang = 'es' }: { items: any[]; lang?: 'es' | 'en' }) {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -180,18 +174,22 @@ function ProjectCarousel({ items }: { items: any[] }) {
         ref={carouselRef}
         className="flex gap-4 mt-2 overflow-x-auto pb-4 scrollbar-hide snap-x touch-pan-x -mx-1 px-1 w-full items-stretch"
       >
-        {items.map((p: any) => (
-          <div key={p.slug} className="min-w-[212px] md:min-w-[246px] max-w-[212px] md:max-w-[246px] snap-start flex">
-            <ProjectCard
-              title={p.title}
-              description={p.subtitle}
-              image={p.cover_url}
-              link={`/cases/${p.slug}`}
-              tags={p.tags}
-              className="mt-3 ml-0"
-            />
-          </div>
-        ))}
+        {items.map((p: any) => {
+          const title = tProjectField(p as PortfolioProject, 'title', lang);
+          const description = tProjectField(p as PortfolioProject, 'subtitle', lang) || tProjectField(p as PortfolioProject, 'description', lang);
+          return (
+            <div key={p.slug} className="min-w-[212px] md:min-w-[246px] max-w-[212px] md:max-w-[246px] snap-start flex">
+              <ProjectCard
+                title={title}
+                description={description}
+                image={p.cover_url}
+                link={`/cases/${p.slug}`}
+                tags={p.tags}
+                className="mt-3 ml-0"
+              />
+            </div>
+          );
+        })}
       </div>
 
       <button 
@@ -205,11 +203,12 @@ function ProjectCarousel({ items }: { items: any[] }) {
   );
 }
 
-export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
+export function AiChat({ isExpanded, onChatStart, onChatClose, onLangChange }: AiChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [history, setHistory] = useState<Array<{ role: string; content: string }>>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [chatLanguage, setChatLanguage] = useState<'es' | 'en'>('es');
   const [lastClickedPrompt, setLastClickedPrompt] = useState<string | null>(null);
   const [playSpin, setPlaySpin] = useState(false);
   const [isIntroDone, setIsIntroDone] = useState(false);
@@ -217,6 +216,11 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const sessionIdRef = useRef<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { t, language, setLanguage } = useLanguage();
+  
+  const currentLang = chatLanguage !== 'es' ? chatLanguage : language;
+
+  const QUICK_PROMPTS = t('chat.prompts');
 
   const AI_AVATAR_URL = "https://fmigvcjlgrhgicyawiyq.supabase.co/storage/v1/object/sign/Assets/Axi%20pensando.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9iMzI1NDE1Mi1hMjA5LTRhOWUtYWQxYS05ZDYxMTI1ZDc5NmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJBc3NldHMvQXhpIHBlbnNhbmRvLnBuZyIsImlhdCI6MTc3OTE2MzM4OSwiZXhwIjoyMDk0NTIzMzg5fQ.LNo-7N9wWMAurHPF4IDwrEfYkzwy9NRs1SOSNgwlZZo";
 
@@ -349,7 +353,7 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
     const modelIdentifier = modelUsed || selectedModel;
     const modelOption = modelOptions.find(m => m.value === modelIdentifier);
     const displayedModel = modelIdentifier === 'default' 
-      ? "Mejor modelo (Automático)" 
+      ? t('chat.automaticModel')
       : (modelOption?.label || modelIdentifier);
 
     setMessages(prev => [...prev, {
@@ -363,6 +367,17 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
 
   const handleChatResponse = async (data: any, userMessage: string) => {
     if (data.session_id) sessionIdRef.current = data.session_id;
+
+    if (data.lang) {
+      const detectedLang = data.lang === 'en' ? 'en' : 'es';
+      if (detectedLang !== chatLanguage) {
+        setChatLanguage(detectedLang);
+        onLangChange?.(detectedLang);
+      }
+      if (detectedLang !== language) {
+        setLanguage(detectedLang);
+      }
+    }
 
     if (data.type === "contact" && data.component === "contact.tsx") {
       // Regla de UX: no duplicar el componente de contacto si ya existe
@@ -387,7 +402,7 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
     const modelIdentifier = data.model_used || selectedModel;
     const modelOption = modelOptions.find(m => m.value === modelIdentifier);
     const displayedModel = modelIdentifier === 'default' 
-      ? "Mejor modelo (Automático)" 
+      ? t('chat.automaticModel')
       : (modelOption?.label || modelIdentifier);
 
     // Combine setting initial message to avoid race conditions
@@ -403,7 +418,7 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
     if ((data.type === "projects" || data.component === "cases.tsx")) {
         let query = supabase
         .from("portfolio_projects")
-        .select(`id, slug, title, subtitle, description, category, tags, cover_url, sort_order`)
+        .select(`id, slug, category, tags, cover_url, demo_url, case_url, technologies, year, featured, visible, sort_order, title, subtitle, description, highlights, title_en, subtitle_en, description_en, highlights_en`)
         .eq("visible", true)
         .order("sort_order", { ascending: true })
 
@@ -468,7 +483,7 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
         }
     } catch (err: any) {
         console.error("Error sending message:", err.message);
-        addAssistantBubble("Hubo un error al procesar tu mensaje. Intenta de nuevo.");
+        addAssistantBubble(t('chat.error'));
     } finally {
         setIsLoading(false);
     }
@@ -498,7 +513,7 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
               <div className="flex items-center gap-3 invisible"><div className="w-3 h-3" /></div>
               <div className="absolute left-1/2 -translate-x-1/2 pointer-events-none">
                 <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 font-bold whitespace-nowrap">
-                  Jorge Naranjo
+                  {t('chat.title')}
                 </span>
               </div>
             </div>
@@ -576,9 +591,9 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
                       {message.type === 'projects' && (
                         <div className="mt-0">
                           {message.items ? (
-                            <ProjectCarousel items={message.items} />
+                            <ProjectCarousel items={message.items} lang={message.lang || currentLang} />
                           ) : (
-                            <div className="text-[13px] text-muted-foreground animate-pulse">Cargando proyectos...</div>
+                            <div className="text-[13px] text-muted-foreground animate-pulse">{t('chat.loadingProjects')}</div>
                           )}
                         </div>
                       )}
@@ -589,7 +604,7 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
                       )}
                       {message.modelUsed && (
                         <div className="text-[10px] text-muted-foreground/60 font-mono mt-1 pt-2 border-t border-border/20">
-                          Respuesta generada por: {message.modelUsed}
+                          {t('chat.generatedBy')} {message.modelUsed}
                         </div>
                       )}
                       {message.form && (
@@ -601,10 +616,10 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
                       {(message.project || message.item) && (
                         <div className="max-h-[600px] mt-0 pt-0 pb-2 h-full">
                           <ProjectCard 
-                              title={message.project?.title || message.item.title}
-                              description={message.project?.description || message.item.subtitle}
-                              image={message.project?.image || message.item.cover_url}
-                              link={message.project?.link || `/cases/${message.item?.slug}`}
+                              title={tProjectField(message.project || message.item, 'title', message.lang || currentLang)}
+                              description={tProjectField(message.project || message.item, 'description', message.lang || currentLang) || tProjectField(message.project || message.item, 'subtitle', message.lang || currentLang)}
+                              image={message.project?.cover_url || message.item?.cover_url}
+                              link={`/cases/${message.project?.slug || message.item?.slug}`}
                               className="mt-3"
                           />
                         </div>
@@ -641,7 +656,7 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
                     className="z-[100] relative w-full"
                   >
                     <div className="flex flex-wrap items-center justify-center gap-2 pb-2">
-                      {QUICK_PROMPTS.filter(p => p !== lastClickedPrompt).map((prompt) => (
+                      {QUICK_PROMPTS.filter(p => p !== lastClickedPrompt).map((prompt: string) => (
                         <motion.button
                           key={prompt}
                           whileHover={{ scale: 1.05 }}
@@ -665,7 +680,7 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
       <motion.div 
         layout
         transition={{ layout: { duration: 1.5, ease: [0.22, 1, 0.36, 1] } }}
-        className={cn("w-full relative", isExpanded ? "border-t border-border/50 bg-transparent z-[200] shrink-0 flex flex-col items-center pt-2 pb-6 px-6 justify-center" : "border-t border-transparent z-[200] px-4")}
+        className={cn("w-full relative", isExpanded ? "border-t border-border/50 bg-transparent z-[200] shrink-0 flex flex-col items-center pt-12 pb-6 px-6 justify-center" : "border-t border-transparent z-[200] px-4")}
       >
         <motion.div 
           layout
@@ -702,19 +717,11 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
                   </div>
                   <div className="flex-1 flex gap-4 items-center">
                     <div className="space-y-1.5 relative">
-                       <p className="text-[13px] font-medium leading-tight text-foreground">Sesión bloqueada: detecté que intentaste llevarme fuera de mis protocolos… pero este no es ese tipo de AI.</p>
+                       <p className="text-[13px] font-medium leading-tight text-foreground">{t('chat.blocked.title')}</p>
                        <p className="text-[11px] font-mono font-semibold tracking-wider text-destructive uppercase flex items-center gap-1.5 mb-[10px] opacity-50">
                           <span>{blockInfo.remainingMinutes.toString().padStart(2, '0')}:{blockInfo.remainingSeconds.toString().padStart(2, '0')}</span> 
-                          <span className="text-destructive/70">restantes</span>
+                          <span className="text-destructive/70">{t('chat.blocked.remaining')}</span>
                        </p>
-                    </div>
-                    <div className="shrink-0 w-14 h-14 relative -mt-3">
-                      <img 
-                        src={AI_AVATAR_URL} 
-                        alt="Axi thinking" 
-                        className="w-full h-full object-contain scale-[1.4]"
-                        referrerPolicy="no-referrer"
-                      />
                     </div>
                   </div>
                   
@@ -742,7 +749,7 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
                   "flex-1 bg-transparent focus:outline-none transition-colors text-foreground resize-none pl-4 pr-[100px] sm:pr-[140px] py-[18px] max-h-[160px] scrollbar-hide block leading-relaxed placeholder:text-muted-foreground/70 placeholder:transition-colors min-w-0",
                   isExpanded ? "text-sm" : "text-base"
                 )}
-                placeholder="Pregunta algo..."
+                placeholder={t('chat.placeholder')}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {
@@ -778,7 +785,7 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
                     })()}
                   </div>
                   <span className="hidden sm:inline">
-                    {!isModelInteracted ? "Mejor" : (modelOptions.find(m => m.value === selectedModel)?.label || "Mejor")}
+                    {!isModelInteracted ? t('chat.automaticModel') : (modelOptions.find(m => m.value === selectedModel)?.label || "Mejor")}
                   </span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -813,9 +820,9 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
                           setIsModelDropdownOpen(false);
                         }}
                         className="w-full text-left px-3 py-1.5 text-[13px] hover:bg-muted/50 flex items-center justify-between transition-colors font-medium text-foreground"
-                        title="Mejor modelo (Automático)"
+                        title={t('chat.automaticModel')}
                       >
-                        <span className="truncate">Mejor modelo (Automático)</span>
+                        <span className="truncate">{t('chat.automaticModel')}</span>
                         {selectedModel === "default" && <Check size={14} className="text-accent shrink-0 ml-2" />}
                       </button>
 
@@ -889,7 +896,7 @@ export function AiChat({ isExpanded, onChatStart, onChatClose }: AiChatProps) {
             animate={animateState}
             className="flex flex-wrap items-center justify-center gap-2 mt-6 max-w-2xl mx-auto transition-all duration-500"
           >
-            {QUICK_PROMPTS.map((prompt, i) => (
+            {QUICK_PROMPTS.map((prompt: string, i: number) => (
               <motion.button
                 key={i}
                 variants={itemVariants}

@@ -2,6 +2,7 @@ import { useState, FormEvent } from "react";
 import { Check, Mail, Linkedin, Github, Twitter, ExternalLink, MessageCircle, ArrowUpRight } from "lucide-react";
 import { useContactChannels, ContactChannel } from "../hooks/useContactChannels";
 import { supabase } from "../lib/supabase";
+import { useLanguage } from "../i18n/LanguageContext";
 
 interface ContactFormProps {
   initialEmail?: string;
@@ -37,6 +38,7 @@ export function ContactForm({ initialEmail = "", initialMessage = "", onSubmitSu
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const { channels, loading } = useContactChannels();
+  const { t } = useLanguage();
 
   const getChannelIcon = (type: string) => {
     switch (type) {
@@ -94,24 +96,24 @@ export function ContactForm({ initialEmail = "", initialMessage = "", onSubmitSu
     <div className="form-container w-full shrink-0 flex flex-col gap-6 order-2">
       <form className="form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Email Corporativo</label>
+          <label htmlFor="email">{t('contactForm.emailLabel')}</label>
           <input 
             type="email" 
             id="email" 
             name="email" 
-            placeholder="tu@empresa.com"
+            placeholder={t('contactForm.emailPlaceholder')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required 
           />
         </div>
         <div className="form-group">
-          <label htmlFor="textarea">¿Cómo podemos ayudarte?</label>
+          <label htmlFor="textarea">{t('contactForm.messageLabel')}</label>
           <textarea 
             name="textarea" 
             id="textarea" 
             rows={4}
-            placeholder="Cuéntale a Jorge sobre tu proyecto..."
+            placeholder={t('contactForm.messagePlaceholder')}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             required
@@ -122,7 +124,7 @@ export function ContactForm({ initialEmail = "", initialMessage = "", onSubmitSu
           type="submit"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Enviando..." : "Enviar Mensaje"}
+          {isSubmitting ? t('contactForm.sending') : t('contactForm.submit')}
         </button>
       </form>
     </div>
@@ -134,8 +136,8 @@ export function ContactForm({ initialEmail = "", initialMessage = "", onSubmitSu
         <div className="w-12 h-12 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mb-4">
           <Check size={24} />
         </div>
-        <h3 className="text-xl font-serif mb-2">Mensaje Enviado</h3>
-        <p className="text-muted-foreground text-sm">Gracias, Jorge se pondrá en contacto contigo pronto.</p>
+        <h3 className="text-xl font-serif mb-2">{t('contactForm.successTitle')}</h3>
+        <p className="text-muted-foreground text-sm">{t('contactForm.successText')}</p>
       </div>
     );
   }
@@ -145,9 +147,9 @@ export function ContactForm({ initialEmail = "", initialMessage = "", onSubmitSu
       {/* Side Content */}
       <div className="flex flex-col gap-8 text-left flex-1 max-w-[450px] order-1">
         <div className="space-y-4">
-          <h2 className="text-4xl md:text-5xl font-serif leading-none tracking-tight">Hablemos ahora.</h2>
+          <h2 className="text-4xl md:text-5xl font-serif leading-none tracking-tight">{t('contactForm.sideTitle')}</h2>
           <p className="text-muted-foreground text-base leading-relaxed max-w-sm">
-            Diseño, Estrategia y AI aplicada. Llevo tu producto de la visión a la realidad con ejecución impecable.
+            {t('contactForm.sideDescription')}
           </p>
         </div>
 
@@ -155,7 +157,7 @@ export function ContactForm({ initialEmail = "", initialMessage = "", onSubmitSu
         {channels.length > 0 && (
           <div className="pt-4 border-t border-border/40">
             <p className="text-xs font-mono text-muted-foreground mb-6 uppercase tracking-wider flex items-center gap-2">
-              <MessageCircle size={12} /> Contacto Directo
+              <MessageCircle size={12} /> {t('contactForm.directContact')}
             </p>
             <div className="flex flex-wrap gap-3 mt-2">
               {channels.map((channel) => (

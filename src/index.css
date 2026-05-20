@@ -423,6 +423,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-stroke: 6px transparent;
+  paint-order: stroke fill;
 }
 
 @media (max-width: 1024px) {
@@ -604,3 +605,8 @@
   .animate-drift { animation: none; }
 }
 
+/* Focus Mode Styles */
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) {
+  padding-top: 48px !important;
+  padding-left: 49px !important;
+}

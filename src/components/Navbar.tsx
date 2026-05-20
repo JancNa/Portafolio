@@ -1,5 +1,6 @@
 import { useTheme } from "../ThemeContext";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { useLanguage } from "../i18n/LanguageContext";
+import { Moon, Sun, Menu, X, Languages } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../lib/utils";
 import { useEffect, useState } from "react";
@@ -7,15 +8,15 @@ import { Link } from "react-router-dom";
 
 export function Navbar() {
   const { theme, setTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { name: "Visión", href: "#vision" },
-    { name: "Proyectos", href: "#proyectos" },
-    { name: "Metodología", href: "#metodologia" },
-    { name: "Experiencia", href: "#experiencia" },
-    { name: "404", href: "/404" }
+    { name: t('nav.vision'), href: "#vision" },
+    { name: t('nav.proyectos'), href: "#proyectos" },
+    { name: t('nav.metodologia'), href: "#metodologia" },
+    { name: t('nav.experiencia'), href: "#experiencia" }
   ];
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -117,7 +118,16 @@ export function Navbar() {
           
           <div className="w-px h-4 bg-border hidden md:block" />
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
+            <button
+               onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
+               className="p-2 rounded-lg hover:bg-muted transition-colors text-foreground flex items-center gap-2 text-xs font-semibold uppercase tracking-wider"
+               aria-label="Toggle Language"
+            >
+               <Languages size={16} />
+               <span className="hidden sm:inline">{language}</span>
+            </button>
+
             <label className="theme-toggle-container">
               <input 
                 type="checkbox" 

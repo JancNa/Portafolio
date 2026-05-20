@@ -4,9 +4,15 @@ import { AiChat } from "./AiChat";
 import { cn } from "../lib/utils";
 import { ShootingStars } from "./ui/shooting-stars";
 import { StarsBackground } from "./ui/stars-background";
+import { useLanguage } from "../i18n/LanguageContext";
 
-export function Hero() {
+interface HeroProps {
+  onLangChange?: (lang: 'es' | 'en') => void;
+}
+
+export function Hero({ onLangChange }: HeroProps) {
   const [chatStarted, setChatStarted] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (chatStarted) {
@@ -55,12 +61,12 @@ export function Hero() {
               className="flex flex-col items-center text-center mb-12"
             >
               <h1 className="text-6xl sm:text-7xl md:text-[6.5rem] font-bold tracking-tight text-balance mb-6">
-                <span className="text-gradient-brand">Jorge Naranjo</span>
+                <span className="text-gradient-brand">{t('hero.name')}</span>
               </h1>
               
               <div className="flex flex-col gap-2 mb-8 items-center text-[1.15rem] md:text-xl font-medium text-foreground">
-                <span>Diseño, construyo y escalo productos digitales</span>
-                <span className="text-muted-foreground font-normal text-base md:text-lg">con enfoque en negocio y AI.</span>
+                <span>{t('hero.tagline1')}</span>
+                <span className="text-muted-foreground font-normal text-base md:text-lg">{t('hero.tagline2')}</span>
               </div>
             </motion.div>
           )}
@@ -76,6 +82,7 @@ export function Hero() {
             isExpanded={chatStarted} 
             onChatStart={() => setChatStarted(true)} 
             onChatClose={() => setChatStarted(false)} 
+            onLangChange={onLangChange}
           />
         </motion.div>
       </motion.div>

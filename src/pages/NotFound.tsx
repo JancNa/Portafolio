@@ -5,8 +5,10 @@ import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { ShootingStars } from "../components/ui/shooting-stars";
 import { StarsBackground } from "../components/ui/stars-background";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export function NotFound() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground relative overflow-x-hidden">
       <div className="relative z-50">
@@ -32,12 +34,12 @@ export function NotFound() {
                 {/* Giant 404 - using vw units to ensure it fits the viewport width without cutting */}
                 <div className="absolute inset-0 flex items-center justify-center font-black italic tracking-tighter leading-none select-none text-[28vw] pointer-events-none z-0">
                     <div className="relative w-full h-full flex items-center justify-center opacity-90 drop-shadow-[0_0_15px_rgba(234,88,12,0.15)] dark:drop-shadow-[0_0_25px_rgba(168,85,247,0.3)]">
-                        {/* Stroke text */}
-                        <span className="absolute text-stroke-gradient-404 px-2 pointer-events-none select-none z-0">
+                        {/* Stroke text - increased horizontal padding and added w-max overflow-visible to avoid clipping stroke on the right */}
+                        <span className="absolute text-stroke-gradient-404 px-20 py-10 leading-normal pointer-events-none select-none z-0 w-max overflow-visible inline-block">
                             404
                         </span>
                         {/* Fill text */}
-                        <span className="absolute text-background px-2 pointer-events-none select-none z-10">
+                        <span className="absolute text-background px-20 py-10 leading-normal pointer-events-none select-none z-10 w-max overflow-visible inline-block">
                             404
                         </span>
                     </div>
@@ -48,17 +50,17 @@ export function NotFound() {
                 <div className="flex flex-col-reverse md:flex-row items-center md:items-end justify-center gap-8 md:gap-16">
                     <div className="text-center md:text-left max-w-xl">
                         <h3 className="text-[32px] sm:text-[40px] font-serif mb-6 leading-tight font-bold">
-                            ¡Ups! Parece que esta página se fue de vacaciones
+                            {t('notFound.title')}
                         </h3>
                         <p className="text-base text-muted-foreground mb-10">
-                            El pequeño amigo parece haber garabateado la dirección. No podemos encontrar la página que buscas.
+                            {t('notFound.description')}
                         </p>
                         <Link 
                             to="/" 
                             className="footer-gradient-button inline-flex items-center gap-3 font-medium text-foreground py-4 px-10 rounded-full"
                         >
                             <span className="relative z-10 flex items-center gap-3 text-lg">
-                              <ArrowLeft size={22} /> Volver al Inicio
+                              <ArrowLeft size={22} /> {t('notFound.backHome')}
                             </span>
                         </Link>
                     </div>

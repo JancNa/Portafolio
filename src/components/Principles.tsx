@@ -1,55 +1,56 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useState, useEffect } from "react";
-import { TextGenerateEffect } from "./ui/text-generate-effect";
-import { ArrowUpRight, Zap, Target, BarChart3, Layers, Sparkles } from "lucide-react";
-
-const principles = [
-  {
-    num: "01",
-    title: "Sistemas Clínicos, no Solo Pantallas",
-    text: "No diseño pantallas aisladas; orquesto flujos robustos alineados a restricciones técnicas y de negocio reales.",
-    icon: <Zap className="w-6 h-6" />,
-    color: "from-purple-500/20 to-indigo-500/20",
-    border: "group-hover:border-indigo-500/30",
-    shadow: "group-hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.3)]",
-    colSpan: "md:col-span-2 lg:col-span-2",
-  },
-  {
-    num: "02",
-    title: "IA como Acelerador de Ejecución",
-    text: "La IA no reemplaza el criterio crítico, multiplica la eficiencia operativa.",
-    icon: <Sparkles className="w-6 h-6" />,
-    color: "from-orange-500/20 to-red-500/20",
-    border: "group-hover:border-red-500/30",
-    shadow: "group-hover:shadow-[0_0_30px_-5px_rgba(239,68,68,0.3)]",
-    colSpan: "md:col-span-1 lg:col-span-1",
-  },
-  {
-    num: "03",
-    title: "Resultados Orientados al Negocio",
-    text: "Construyo productos que retienen clientes y escalan con la demanda B2B/B2C.",
-    icon: <BarChart3 className="w-6 h-6" />,
-    color: "from-emerald-500/20 to-teal-500/20",
-    border: "group-hover:border-emerald-500/30",
-    shadow: "group-hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.3)]",
-    colSpan: "md:col-span-2 lg:col-span-1",
-  },
-  {
-    num: "04",
-    title: "Diseño Sistémico",
-    text: "Uniendo puntos desconectados dentro de corporativos y startups.",
-    icon: <Layers className="w-6 h-6" />,
-    color: "from-blue-500/20 to-cyan-500/20",
-    border: "group-hover:border-cyan-500/30",
-    shadow: "group-hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.3)]",
-    colSpan: "md:col-span-1 lg:col-span-2",
-  }
-];
+import { Zap, BarChart3, Layers, Sparkles } from "lucide-react";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export function Principles() {
+  const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
+
+  const principles = [
+    {
+      num: "01",
+      title: t('principles.p1.title'),
+      text: t('principles.p1.text'),
+      icon: <Zap className="w-6 h-6" />,
+      color: "from-purple-500/20 to-indigo-500/20",
+      border: "group-hover:border-indigo-500/30",
+      shadow: "group-hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.3)]",
+      colSpan: "md:col-span-2 lg:col-span-2",
+    },
+    {
+      num: "02",
+      title: t('principles.p2.title'),
+      text: t('principles.p2.text'),
+      icon: <Sparkles className="w-6 h-6" />,
+      color: "from-orange-500/20 to-red-500/20",
+      border: "group-hover:border-red-500/30",
+      shadow: "group-hover:shadow-[0_0_30px_-5px_rgba(239,68,68,0.3)]",
+      colSpan: "md:col-span-1 lg:col-span-1",
+    },
+    {
+      num: "03",
+      title: t('principles.p3.title'),
+      text: t('principles.p3.text'),
+      icon: <BarChart3 className="w-6 h-6" />,
+      color: "from-emerald-500/20 to-teal-500/20",
+      border: "group-hover:border-emerald-500/30",
+      shadow: "group-hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.3)]",
+      colSpan: "md:col-span-2 lg:col-span-1",
+    },
+    {
+      num: "04",
+      title: t('principles.p4.title'),
+      text: t('principles.p4.text'),
+      icon: <Layers className="w-6 h-6" />,
+      color: "from-blue-500/20 to-cyan-500/20",
+      border: "group-hover:border-cyan-500/30",
+      shadow: "group-hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.3)]",
+      colSpan: "md:col-span-1 lg:col-span-2",
+    }
+  ];
 
   useEffect(() => {
     const checkSize = () => {
@@ -69,7 +70,6 @@ export function Principles() {
 
   const y1 = useTransform(scrollYProgress, [0, 1], [-150, 150]);
   const y2 = useTransform(scrollYProgress, [0, 1], [150, -150]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
     <section id="vision" ref={containerRef} className="pt-10 lg:pt-32 pb-4 lg:pb-0 relative text-foreground z-10 overflow-visible flex flex-col lg:block lg:min-h-[600px] w-full">
@@ -97,7 +97,7 @@ export function Principles() {
               show: { transition: { staggerChildren: 0.2 } }
             }}
           >
-            { "Construyo productos que funcionan en el mundo real.".split(" ").map((word, i) => (
+            { t('principles.title').split(" ").map((word: string, i: number) => (
                 <motion.span 
                   key={i}
                   className="inline-block mr-[0.25em]"
@@ -118,7 +118,7 @@ export function Principles() {
             viewport={{ once: true }}
             className="text-foreground/80 text-base leading-relaxed font-light lg:max-w-[600px]"
           >
-            Paso de ideas borrosas a productos digitales listos para producción. Conecto estrategia, UX, datos y tecnología, usando IA y pensamiento de sistemas para crear plataformas que realmente escalan más allá del prototipo.
+            {t('principles.description')}
           </motion.p>
         </div>
       </div>

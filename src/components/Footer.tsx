@@ -1,8 +1,10 @@
 import { ArrowUpRight, Github, Linkedin, Mail, Twitter, ExternalLink } from "lucide-react";
 import { useContactChannels } from "../hooks/useContactChannels";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export function Footer() {
   const { channels } = useContactChannels();
+  const { t } = useLanguage();
 
   const getEmailChannel = () => channels.find(c => c.type === 'email');
   const socialChannels = channels.filter(c => c.type !== 'email');
@@ -14,17 +16,17 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 mb-24">
             <div>
               <h2 className="text-4xl md:text-6xl font-serif mb-6 leading-none">
-                Construyamos el próximo estándar.
+                {t('footer.title')}
               </h2>
               <p className="text-muted-foreground max-w-sm font-light text-lg mb-8">
-                Abierto a liderar operaciones de producto, proyectos especiales de consultoría o discutir sobre sistemas y AI.
+                {t('footer.description')}
               </p>
               <a 
                 href={getEmailChannel()?.url || "mailto:contact@jorgenaranjo.pro"}
                 className="footer-gradient-button inline-flex items-center gap-3 font-medium text-foreground"
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  Hablemos ahora <ArrowUpRight size={18} />
+                  {t('footer.cta')} <ArrowUpRight size={18} />
                 </span>
               </a>
             </div>
@@ -54,20 +56,20 @@ export function Footer() {
                   </>
                 )}
                 <a href="#" className="flex items-center gap-2 hover:text-foreground transition-colors">
-                  Descargar CV [PDF] <ArrowUpRight size={14} />
+                  {t('footer.cv')} <ArrowUpRight size={14} />
                 </a>
               </div>
               
               <div className="mt-16 md:mt-0 text-muted-foreground/60 text-xs font-mono">
-                <p>📍 Available Worldwide (Remote)</p>
-                <p className="mt-2 text-right hidden md:block text-muted-foreground/40">B2B / SaaS / B2C / AI Products</p>
+                <p>{t('footer.worldwide')}</p>
+                <p className="mt-2 text-right hidden md:block text-muted-foreground/40">{t('footer.products')}</p>
               </div>
             </div>
           </div>
 
           <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono text-muted-foreground/50">
-            <p>© {new Date().getFullYear()} Jorge Naranjo. All rights reserved.</p>
-            <p className="flex items-center gap-1">Elevated Profile. Not a generic template.</p>
+            <p>© {new Date().getFullYear()} {t('footer.rights')}</p>
+            <p className="flex items-center gap-1">{t('footer.elevator')}</p>
           </div>
         </div>
       </div>
