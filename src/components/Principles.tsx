@@ -7,7 +7,7 @@ const principles = [
   {
     num: "01",
     title: "Sistemas Clínicos, no Solo Pantallas",
-    text: "El diseño moderno no se trata de hacer pantallas bonitas aisladas, sino de orquestar flujos de usuarios en ecosistemas complejos con restricciones de negocio y técnicas reales.",
+    text: "No diseño pantallas aisladas; orquesto flujos robustos alineados a restricciones técnicas y de negocio reales.",
     icon: <Zap className="w-6 h-6" />,
     color: "from-purple-500/20 to-indigo-500/20",
     border: "group-hover:border-indigo-500/30",
@@ -172,7 +172,7 @@ export function Principles() {
       </div>
 
       {/* Bottom Section: Cards (Centradas en el borde inferior) */}
-      <div className="w-full px-6 max-w-7xl absolute bottom-0 left-1/2 -translate-x-1/2 z-20 transform translate-y-1/2">
+      <div className="container mx-auto px-6 max-w-7xl absolute bottom-0 left-0 right-0 z-20 transform translate-y-1/2">
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -200,12 +200,12 @@ export function Principles() {
                 <div className="w-10 h-10 rounded-xl bg-background/50 border border-border flex items-center justify-center text-foreground shadow-sm">
                   <div className="scale-75">{p.icon}</div>
                 </div>
-
+ 
                 <div className="flex-1 flex flex-col justify-start">
                   <h3 className="text-sm md:text-lg font-serif text-foreground mb-1 transition-colors duration-300 font-medium tracking-wide">
                     {p.title}
                   </h3>
-                  <p className="text-foreground/70 text-xs md:text-sm leading-relaxed transition-colors font-light line-clamp-2 md:line-clamp-3">
+                  <p className="text-foreground/70 text-xs md:text-sm leading-relaxed transition-colors font-light">
                     {p.text}
                   </p>
                 </div>
