@@ -108,7 +108,7 @@ export function Cases({ items, lang }: CasesProps) {
 
   if (loading) return (
     <section id="proyectos" className="pt-[300px] md:pt-[250px] pb-24 relative overflow-x-hidden bg-muted/40 font-sans">
-      <div className="container mx-auto px-6">
+      <div className="w-full lg:max-w-[90%] mx-auto px-6">
         <div className="mb-12 flex flex-col md:flex-row md:justify-between md:items-end gap-6">
           <div>
             <div className="h-4 w-32 bg-neutral-200 dark:bg-neutral-800 animate-pulse rounded mb-3" />
@@ -120,7 +120,7 @@ export function Cases({ items, lang }: CasesProps) {
           </div>
           <div className="h-11 w-44 bg-neutral-200 dark:bg-neutral-800/60 animate-pulse rounded-[12px] hidden md:block" />
         </div>
-        <div className="w-full h-[550px] md:h-[680px] lg:h-[720px] relative rounded-3xl border border-dashed border-border/45 bg-muted/5 flex items-center justify-center select-none cursor-default overflow-hidden">
+        <div className="w-full h-[550px] md:h-[680px] lg:h-[720px] relative rounded-3xl bg-muted/5 flex items-center justify-center select-none cursor-default overflow-hidden">
           {/* Ambient Gray Logo in Background */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-[0.08] dark:opacity-[0.035] select-none filter grayscale contrast-75 saturate-0">
             <img 
@@ -217,7 +217,7 @@ export function Cases({ items, lang }: CasesProps) {
 
   return (
     <section id="proyectos" className="pt-[300px] md:pt-[250px] pb-24 relative overflow-x-hidden bg-muted/40">
-      <div className="container mx-auto px-6">
+      <div className="w-full lg:max-w-[90%] mx-auto px-6">
         {!items && (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -245,7 +245,7 @@ export function Cases({ items, lang }: CasesProps) {
         {/* Draggable Playground workspace */}
         <div 
           ref={sandboxRef} 
-          className="w-full h-[550px] md:h-[680px] lg:h-[720px] relative rounded-3xl border border-dashed border-border/45 bg-muted/5 overflow-visible flex items-center justify-center select-none cursor-default"
+          className="w-full h-[550px] md:h-[680px] lg:h-[720px] relative rounded-3xl bg-muted/5 overflow-visible flex items-center justify-center select-none cursor-default"
           style={{
             backgroundImage: 'radial-gradient(ellipse at center, rgba(var(--accent-rgb), 0.03) 0%, transparent 70%)',
           }}
