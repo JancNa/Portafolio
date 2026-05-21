@@ -45,6 +45,7 @@ export const DraggableCardBody = ({
 
   const rectRef = useRef<{ width: number; height: number; left: number; top: number } | null>(null);
   const isDraggingRef = useRef(false);
+  const pointerDownPos = useRef({ x: 0, y: 0 });
 
   const velocityX = useVelocity(mouseX);
   const velocityY = useVelocity(mouseY);
@@ -183,7 +184,22 @@ export const DraggableCardBody = ({
           });
         }
       }}
-      onClick={onClick}
+      onPointerDown={(e) => {
+        pointerDownPos.current = { x: e.clientX, y: e.clientY };
+      }}
+      onClick={(e: React.MouseEvent) => {
+        const dx = e.clientX - pointerDownPos.current.x;
+        const dy = e.clientY - pointerDownPos.current.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance > 5) {
+          e.stopPropagation();
+          e.preventDefault();
+          return;
+        }
+        
+        if (onClick) onClick();
+      }}
       style={{
         willChange: "transform",
         ...style,
