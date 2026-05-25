@@ -7,7 +7,7 @@ export function Methodology() {
     <section id="metodologia" className="py-24 border-t border-border">
       <div className="container mx-auto px-6">
         <div className="mb-16">
-          <h2 className="text-4xl md:text-5xl font-serif max-w-2xl mb-6 leading-tight">
+          <h2 className="text-4xl md:text-5xl font-serif font-semibold max-w-2xl mb-6 leading-tight">
             {t('methodology.title')}
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl font-light">

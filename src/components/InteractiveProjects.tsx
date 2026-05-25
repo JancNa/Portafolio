@@ -459,7 +459,8 @@ export function InteractiveProjects() {
           style={{ 
             transformOrigin: `50% ${targetOriginY}`,
             width: "125.52vw",
-            gap: "1.38vw"
+            gap: "1.38vw",
+            willChange: "transform, opacity"
           }}
           className="absolute top-1/2 left-1/2 z-10 grid grid-cols-5"
         >
@@ -498,7 +499,7 @@ export function InteractiveProjects() {
                   ease: [0.25, 1, 0.45, 1],
                   delay: currentDelay
                 }}
-                style={{ zIndex, width: "24vw" }}
+                style={{ zIndex, width: "24vw", willChange: "transform, opacity" }}
                 className="relative rounded-none h-[30vh] lg:h-auto lg:aspect-[16/9]"
               >
                 {isCenter ? (
@@ -513,7 +514,7 @@ export function InteractiveProjects() {
                       duration: 3,
                       ease: "easeInOut"
                     }}
-                    style={{ transformOrigin: "center center" }}
+                    style={{ transformOrigin: "center center", willChange: "clip-path, transform" }}
                   >
                     <motion.img
                       src={proj.cover_url}
@@ -525,14 +526,14 @@ export function InteractiveProjects() {
                         duration: 3,
                         ease: "easeInOut"
                       }}
-                      style={{ transformOrigin: "center center" }}
+                      style={{ transformOrigin: "center center", willChange: "transform" }}
                       className="w-full h-full object-cover"
                       referrerPolicy="no-referrer"
                     />
                   </motion.div>
                 ) : (
                   <div 
-                    className={`w-full h-full overflow-hidden group transition-all duration-1000 ${
+                    className={`w-full h-full overflow-hidden group transition-transform duration-1000 ${
                       !isEvenCol ? "translate-y-[15vh] lg:translate-y-[6.75vw]" : "translate-y-0"
                     }`}
                   >
@@ -608,24 +609,24 @@ export function InteractiveProjects() {
             </motion.div>
 
             {/* Header overlay for navigation inside the section (absolutely anchored) */}
-            <div className="absolute top-0 inset-x-0 z-30 w-full p-6 md:p-12 flex justify-between items-start pt-safe pointer-events-auto">
+            <div className="absolute top-0 inset-x-0 z-30 w-full px-6 md:px-12 pb-6 md:pb-12 pt-[72px] flex flex-col md:flex-row justify-between items-start pointer-events-auto gap-6 md:gap-8">
               <div className="relative z-10 min-h-[4rem] flex items-end">
                 <AnimatePresence mode="wait">
-                  <motion.h4 
+                  <motion.h2 
                     key={`title-${activeIndex}`}
                     initial={{ opacity: 0, y: 25 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-4xl md:text-6xl lg:text-7xl font-display font-light tracking-tight transition-colors duration-500 max-w-3xl text-white drop-shadow-xl"
+                    className="text-[48px] leading-[60px] font-display font-semibold tracking-tight transition-colors duration-500 max-w-3xl text-white drop-shadow-xl"
                   >
                     {getT(activeProject, "title")}
-                  </motion.h4>
+                  </motion.h2>
                 </AnimatePresence>
               </div>
 
               {/* Tags side */}
-              <div className="relative z-10 flex flex-col items-end min-h-[4rem]">
+              <div className="relative z-10 flex flex-col items-start md:items-end min-h-[4rem]">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={`tags-${activeIndex}`}
@@ -633,9 +634,9 @@ export function InteractiveProjects() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col items-end"
+                    className="flex flex-col items-start md:items-end"
                   >
-                    <div className="flex flex-wrap items-center justify-end gap-3 mb-2">
+                    <div className="flex flex-wrap items-center justify-start md:justify-end gap-3 mb-2">
                       <span className="text-[10px] font-mono border backdrop-blur-md px-3 py-1 rounded-full uppercase tracking-widest font-semibold transition-colors duration-500 text-white/90 border-white/20 bg-black/40">
                         {activeProject.category}
                       </span>
@@ -644,7 +645,7 @@ export function InteractiveProjects() {
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap justify-end gap-2">
+                    <div className="flex flex-wrap justify-start md:justify-end gap-2">
                       {activeProject.tags.map(tag => (
                         <span 
                           key={tag} 

@@ -84,7 +84,7 @@ export function Principles() {
       <div className="container mx-auto px-6 relative z-10 max-w-7xl shrink-0 lg:pb-[300px]">
         <div className="flex flex-col gap-6 w-full lg:w-2/3 pt-4 pb-0 lg:py-10 relative z-10">
           <motion.h2 
-            className="font-sans text-[40px] md:text-[60px] font-semibold tracking-tight text-foreground mb-4 leading-[1.1] flex flex-wrap max-w-[640px]"
+            className="font-display text-[40px] md:text-[60px] font-semibold tracking-tight text-foreground mb-4 leading-[1.1] flex flex-wrap max-w-[640px]"
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-100px" }}
