@@ -613,16 +613,16 @@ export function AiChat({ isExpanded, onChatStart, onChatClose, onLangChange }: A
                           initialMessage={message.form.message} 
                         />
                       )}
-                      {(message.project || message.item) && (
-                        <div className="max-h-[600px] mt-0 pt-0 pb-2 h-full">
-                          <ProjectCard 
-                              title={tProjectField(message.project || message.item, 'title', message.lang || currentLang)}
-                              description={tProjectField(message.project || message.item, 'description', message.lang || currentLang) || tProjectField(message.project || message.item, 'subtitle', message.lang || currentLang)}
-                              image={message.project?.cover_url || message.item?.cover_url}
-                              link={`/cases/${message.project?.slug || message.item?.slug}`}
-                              className="mt-3"
-                          />
-                        </div>
+                      {(message.project || message.item) && (message.project?.cover_url || message.item?.cover_url) && (
+                          <div className="max-h-[600px] mt-0 pt-0 pb-2 h-full">
+                            <ProjectCard 
+                                title={tProjectField(message.project || message.item, 'title', message.lang || currentLang)}
+                                description={tProjectField(message.project || message.item, 'description', message.lang || currentLang) || tProjectField(message.project || message.item, 'subtitle', message.lang || currentLang)}
+                                image={message.project?.cover_url || message.item?.cover_url}
+                                link={`/cases/${message.project?.slug || message.item?.slug}`}
+                                className="mt-3"
+                            />
+                          </div>
                       )}
                     </div>
                   </motion.div>

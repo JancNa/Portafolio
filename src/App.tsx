@@ -11,6 +11,7 @@ import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { Principles } from "./components/Principles";
 import { Cases } from "./components/Cases";
+import { InteractiveProjects } from "./components/InteractiveProjects";
 import { Methodology } from "./components/Methodology";
 import { Experience } from "./components/Experience";
 import { Footer } from "./components/Footer";

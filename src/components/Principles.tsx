@@ -76,10 +76,6 @@ export function Principles() {
       {/* Background container for glow effects - clipped to parent to prevent horizontal scroll */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <motion.div 
-          style={{ y: y1 }}
-          className="absolute top-0 -left-[10%] w-[50vw] h-[50vw] max-w-[640px] max-h-[600px] bg-[#a855f7]/[0.10] dark:bg-[#a855f7]/[0.05] rounded-full blur-[100px] mix-blend-normal" 
-        />
-        <motion.div 
           style={{ y: y2 }}
           className="absolute bottom-0 -right-[10%] w-[45vw] h-[45vw] max-w-[500px] max-h-[500px] bg-[#ea580c]/[0.10] dark:bg-[#ea580c]/[0.05] rounded-full blur-[100px] mix-blend-normal" 
         />

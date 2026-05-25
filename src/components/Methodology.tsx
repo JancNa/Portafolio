@@ -22,7 +22,7 @@ export function Methodology() {
             viewport={{ once: true }}
             className="bg-background p-8 md:p-12 lg:p-16 flex flex-col"
           >
-            <h3 className="text-xl font-medium font-serif mb-4 text-accent">{t('methodology.m1.title')}</h3>
+            <h3 className="text-xl font-medium font-serif mb-4 text-foreground">{t('methodology.m1.title')}</h3>
             <p className="text-muted-foreground leading-relaxed text-sm">
               {t('methodology.m1.text')}
             </p>
@@ -34,7 +34,7 @@ export function Methodology() {
             viewport={{ once: true }}
             className="bg-background p-8 md:p-12 lg:p-16 flex flex-col"
           >
-            <h3 className="text-xl font-medium font-serif mb-4 text-accent">{t('methodology.m2.title')}</h3>
+            <h3 className="text-xl font-medium font-serif mb-4 text-foreground">{t('methodology.m2.title')}</h3>
             <p className="text-muted-foreground leading-relaxed text-sm">
               {t('methodology.m2.text')}
             </p>
@@ -46,7 +46,7 @@ export function Methodology() {
             viewport={{ once: true }}
             className="bg-background p-8 md:p-12 lg:p-16 flex flex-col"
           >
-            <h3 className="text-xl font-medium font-serif mb-4 text-accent">{t('methodology.m3.title')}</h3>
+            <h3 className="text-xl font-medium font-serif mb-4 text-foreground">{t('methodology.m3.title')}</h3>
             <p className="text-muted-foreground leading-relaxed text-sm">
               {t('methodology.m3.text')}
             </p>
@@ -59,7 +59,7 @@ export function Methodology() {
             className="bg-background p-8 md:p-12 lg:p-16 flex flex-col items-start justify-center relative overflow-hidden"
           >
             <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-accent/5 rounded-full blur-3xl"></div>
-            <h3 className="text-xl font-medium font-serif mb-4 text-accent z-10">{t('methodology.m4.title')}</h3>
+            <h3 className="text-xl font-medium font-serif mb-4 text-foreground z-10">{t('methodology.m4.title')}</h3>
             <p className="text-muted-foreground leading-relaxed text-sm z-10">
               {t('methodology.m4.text')}
             </p>

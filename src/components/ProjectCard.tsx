@@ -19,12 +19,18 @@ export function ProjectCard({ title, description, image, link, tags = [], classN
       className={`flex flex-col h-full group overflow-hidden rounded-2xl bg-background border border-border shadow-lg hover:shadow-xl transition-all duration-300 ${className}`}
     >
       <div className="aspect-[16/10] overflow-hidden flex-shrink-0">
-        <img 
-          src={image} 
-          alt={title} 
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          referrerPolicy="no-referrer"
-        />
+        {image ? (
+          <img 
+            src={image} 
+            alt={title} 
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          <div className="w-full h-full bg-muted flex items-center justify-center text-muted-foreground text-xs">
+            {title}
+          </div>
+        )}
       </div>
       <div className="p-6 flex flex-col flex-1">
         <div className="flex flex-wrap gap-1.5 mb-3">
