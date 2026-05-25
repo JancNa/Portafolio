@@ -31,6 +31,8 @@ jobs:
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
       - name: Create 404.html fallback
         run: cp dist/index.html dist/404.html
+      - name: Create CNAME
+        run: echo "jorgenaranjo.pro" > dist/CNAME
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
