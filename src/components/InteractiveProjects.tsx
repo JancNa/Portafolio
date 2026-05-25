@@ -500,7 +500,7 @@ export function InteractiveProjects() {
                   delay: currentDelay
                 }}
                 style={{ zIndex, width: "24vw", willChange: "transform, opacity" }}
-                className="relative rounded-none h-[30vh] lg:h-auto lg:aspect-[16/9]"
+                className="relative rounded-none h-[30vh] md:h-[50vh] md:aspect-auto lg:h-auto lg:aspect-[16/9]"
               >
                 {isCenter ? (
                   <motion.div 

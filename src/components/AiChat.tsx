@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, User, Bot, X, ChevronLeft, ChevronRight, Check, Clock } from "lucide-react";
+import { Send, User, Bot, X, ChevronLeft, ChevronRight, Check, Clock, FileDown } from "lucide-react";
 import { motion, AnimatePresence, type Variants } from "motion/react";
 import { cn } from "../lib/utils";
 import ReactMarkdown from "react-markdown";
@@ -9,6 +9,7 @@ import { supabase } from "../lib/supabase";
 import { patchProject, patchProjects } from "../lib/projectUtils";
 import { useLanguage } from "../i18n/LanguageContext";
 import { tProjectField, type PortfolioProject } from "./Cases";
+import { useContactChannels } from "../hooks/useContactChannels";
 
 // --- Tipos ---
 type Message = {
@@ -23,6 +24,7 @@ type Message = {
   project?: PortfolioProject;
   modelUsed?: string;
   lang?: 'es' | 'en';
+  cvDownload?: boolean;
 };
 
 // --- Helpers de comunicación ---
@@ -203,6 +205,51 @@ function ProjectCarousel({ items, lang = 'es' }: { items: any[]; lang?: 'es' | '
   );
 }
 
+function CvDownloadCard({ channels, lang }: { channels: any[]; lang: 'es' | 'en' }) {
+  const cvChannel = channels?.find((c: any) => 
+    c.type === 'cv' || 
+    c.type === 'download' ||
+    c.slug === 'cv' || 
+    c.slug?.includes('cv') || 
+    c.label?.toLowerCase().includes('cv') ||
+    c.url?.toLowerCase().includes('.pdf')
+  );
+
+  const fallbackUrl = "https://fmigvcjlgrhgicyawiyq.supabase.co/storage/v1/object/public/cv/CV-Jorge-Naranjo.pdf";
+  const url = cvChannel?.url || fallbackUrl;
+  const label = cvChannel?.label || (lang === 'en' ? "Download CV [PDF]" : "Descargar CV [PDF]");
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="relative flex items-center gap-4 p-4 rounded-xl bg-black/50 border border-white/10 shadow-lg backdrop-blur-md overflow-hidden mt-2 group w-full"
+    >
+      <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-white/[0.02] to-transparent pointer-events-none" />
+      
+      <a
+        href={url}
+        download="CV-Jorge-Naranjo.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="icon-gradient-button flex-shrink-0 z-10"
+        title={label}
+      >
+        <FileDown className="w-5 h-5 text-white z-10" />
+      </a>
+
+      <div className="relative z-10 flex flex-col min-w-0 flex-1 text-left">
+        <h4 className="text-sm font-semibold text-white truncate">
+          {lang === 'en' ? "Curriculum Vitae • Jorge Naranjo" : "Currículum Vitae • Jorge Naranjo"}
+        </h4>
+        <p className="text-xs text-white/60 mt-0.5 truncate font-sans">
+          CV-Jorge-Naranjo.pdf • PDF
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
 export function AiChat({ isExpanded, onChatStart, onChatClose, onLangChange }: AiChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [history, setHistory] = useState<Array<{ role: string; content: string }>>([]);
@@ -217,6 +264,7 @@ export function AiChat({ isExpanded, onChatStart, onChatClose, onLangChange }: A
   const sessionIdRef = useRef<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { t, language, setLanguage } = useLanguage();
+  const { channels } = useContactChannels();
   
   const currentLang = chatLanguage !== 'es' ? chatLanguage : language;
 
@@ -379,6 +427,19 @@ export function AiChat({ isExpanded, onChatStart, onChatClose, onLangChange }: A
       }
     }
 
+    const userMsgLower = userMessage.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const assistantMsgLower = (data.message || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    
+    const isCVQuery = 
+      userMsgLower.includes("cv") || 
+      userMsgLower.includes("curriculum") || 
+      userMsgLower.includes("resume") || 
+      userMsgLower.includes("hoja de vida") ||
+      assistantMsgLower.includes("cv") || 
+      assistantMsgLower.includes("curriculum") || 
+      assistantMsgLower.includes("resume") || 
+      assistantMsgLower.includes("hoja de vida");
+
     if (data.type === "contact" && data.component === "contact.tsx") {
       // Regla de UX: no duplicar el componente de contacto si ya existe
       const hasContactForm = messages.some(m => m.role === 'model' && m.type === 'component' && m.component === 'contact');
@@ -386,11 +447,12 @@ export function AiChat({ isExpanded, onChatStart, onChatClose, onLangChange }: A
       if (!hasContactForm) {
         addAssistantBubble(data.message, {
           type: 'component',
-          component: 'contact'
+          component: 'contact',
+          cvDownload: isCVQuery
         }, data.model_used);
       } else {
         // Si ya existe, solo añadimos el mensaje de texto para no saturar con forms
-        addAssistantBubble(data.message, { type: 'text' }, data.model_used);
+        addAssistantBubble(data.message, { type: 'text', cvDownload: isCVQuery }, data.model_used);
       }
       
       setHistory(prev => updateHistory(prev, userMessage, data));
@@ -411,6 +473,7 @@ export function AiChat({ isExpanded, onChatStart, onChatClose, onLangChange }: A
       role: 'model',
       text: data.message,
       ...data,
+      cvDownload: isCVQuery || data.cvDownload,
       modelUsed: displayedModel,
       items: (data.type === 'projects' || data.component === 'cases.tsx') ? null : undefined // marker for loading
     }]);
@@ -541,8 +604,10 @@ export function AiChat({ isExpanded, onChatStart, onChatClose, onLangChange }: A
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     className={cn(
-                      "flex items-start gap-4",
-                      message.role === "user" ? "ml-auto flex-row-reverse max-w-[85%]" : "max-w-[95%]"
+                      "flex flex-col md:flex-row gap-1.5 md:gap-4",
+                      message.role === "user" 
+                        ? "ml-auto md:flex-row-reverse items-end md:items-start max-w-[85%]" 
+                        : "items-start max-w-[95%]"
                     )}
                   >
                     <div className={cn(
@@ -588,6 +653,11 @@ export function AiChat({ isExpanded, onChatStart, onChatClose, onLangChange }: A
                           </ReactMarkdown>
                         </div>
                       )}
+                      {message.cvDownload && (
+                        <div className="mt-2 w-full">
+                          <CvDownloadCard channels={channels} lang={message.lang || currentLang} />
+                        </div>
+                      )}
                       {message.type === 'projects' && (
                         <div className="mt-0">
                           {message.items ? (
@@ -614,13 +684,14 @@ export function AiChat({ isExpanded, onChatStart, onChatClose, onLangChange }: A
                         />
                       )}
                       {(message.project || message.item) && (message.project?.cover_url || message.item?.cover_url) && (
-                          <div className="max-h-[600px] mt-0 pt-0 pb-2 h-full">
+                          <div className="mt-0 pt-0 pb-2 flex justify-start w-full">
                             <ProjectCard 
                                 title={tProjectField(message.project || message.item, 'title', message.lang || currentLang)}
                                 description={tProjectField(message.project || message.item, 'description', message.lang || currentLang) || tProjectField(message.project || message.item, 'subtitle', message.lang || currentLang)}
                                 image={message.project?.cover_url || message.item?.cover_url}
                                 link={`/cases/${message.project?.slug || message.item?.slug}`}
                                 className="mt-3"
+                                isChatDetail={true}
                             />
                           </div>
                       )}

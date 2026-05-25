@@ -592,6 +592,62 @@
   }
 }
 
+/* Icon Gradient Button (Rounded square rotating conic gradient border) */
+.icon-gradient-button {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-gradient-button:hover {
+  transform: scale(1.08);
+}
+
+.icon-gradient-button::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: conic-gradient(
+    from 0deg,
+    #ea580c,
+    #a855f7,
+    #d946ef,
+    #ea580c
+  );
+  z-index: -2;
+  filter: blur(4px);
+  transform: rotate(0deg);
+  animation: footer-btn-rot 4s linear infinite;
+  opacity: 0.9;
+}
+
+.icon-gradient-button::after {
+  content: "";
+  position: absolute;
+  inset: 1.5px;
+  background: var(--background);
+  border-radius: 10.5px;
+  z-index: -1;
+  transition: background 0.3s ease;
+}
+
+.dark .icon-gradient-button::after {
+  background: #000000;
+}
+
 @keyframes drift {
   0%, 100% { transform: translate(0%, 0%) scale(1); }
   33% { transform: translate(3%, -2%) scale(1.05); }
