@@ -53,26 +53,47 @@ export const translations = {
     },
     experience: {
       title: "Evolución & Track Record",
-      subtitle: "Un camino orientado al impacto a través de diseño riguroso y visión de producto sistémica.",
+      subtitle: "Un recorrido a través de los años, donde la intersección entre negocio, diseño y tecnología me ha permitido construir productos digitales escalables y de alto impacto.",
       present: "Presente",
       roles: [
         {
-          period: "2022 — Presente",
-          title: "Lead Product Designer & Strategist",
-          company: "Varias (Consultoría & Proyectos de Alta Complejidad)",
-          description: "Liderando iniciativas end-to-end: desde el Product Discovery estratégico hasta la arquitectura global de sistemas, operando como socio consultivo en transformación digital e innovación guiada por AI."
+          period: "2026",
+          title: "Product Creator",
+          company: "Leal.co (rol actual)",
+          description: [
+            "Asumo el rol de Product Creator, combinando estrategia de producto, diseño de experiencias y ejecución técnica con IA y desarrollo full-stack para Leal 360.",
+            "Defino y construyo nuevas funcionalidades del motor de campañas y automatización (campañas avanzadas, reglas de envío, decisiones de a quién/cuándo comunicar), operando en todos los países donde está Leal.",
+            "Trabajo en personalización de loyalty, reglas antifraude, segmentación avanzada y experiencia de campañas B2B/B2C sobre la plataforma Leal 360."
+          ]
         },
         {
-          period: "2019 — 2022",
-          title: "Sr. UX/UI Designer → Product Design Lead",
-          company: "Empresas Tecnológicas Clave",
-          description: "Rediseño de flujos core y escalabilidad de Design Systems. Colaboración profunda con equipos de ingeniería para mantener consistencia en ciclos ágiles de entrega."
+          period: "2025",
+          title: "Product Designer",
+          company: "Leal.co",
+          description: [
+            "Diseñé experiencias, flujos, componentes y visuales para Leal 360, plataforma de datos de clientes y marketing automation para retail en LATAM.",
+            "Creé y evolucioné el design system usado en los productos de Leal, ayudando a reducir tiempos de entrega (apoyado en IA y sistemas de diseño) y a mantener consistencia en múltiples países.",
+            "Colaboré con equipo de producto, datos y tecnología en iniciativas de loyalty, campañas, segmentación, contactabilidad y reglas operativas sobre millones de usuarios y cientos de marcas en la región."
+          ]
         },
         {
-          period: "2016 — 2019",
-          title: "Digital Designer",
-          company: "Agencias & Startups B2C",
-          description: "Elaboración de cimientos visuales y de interacción. Un enfoque temprano en la retención, gamificación y la estética vinculada a resultados de marca y engagement."
+          period: "2023–2024",
+          title: "Freelance",
+          company: "Ludycom & Hipal (noches y fines de semana)",
+          description: [
+            "Rediseñé la web app de Ludycom (y su producto HIPAL), creando la primera versión de su design system y modernizando la plataforma.",
+            "Logré reducir en aproximadamente 30–40% los tickets de soporte, mejorando usabilidad y claridad de los flujos para más de 160 comercios activos que usan la plataforma.",
+            "Trabajé como independiente en paralelo a mi rol principal, reforzando mi perfil de product builder con proyectos reales de SaaS B2B/B2C."
+          ]
+        },
+        {
+          period: "Antes de 2023",
+          title: "Base de experiencia (6+ años)",
+          company: "Trayectoria Profesional",
+          description: [
+            "Acumulo más de 6 años de experiencia profesional entre diseño de experiencias, producto y proyectos independientes, con énfasis en UX/UI, prototipado rápido y sistemas digitales.",
+            "Construí una base sólida para mi rol actual: traducir entre negocio, diseño y desarrollo, y usar IA como acelerador en discovery, diseño y ejecución end-to-end."
+          ]
         }
       ]
     },
@@ -187,26 +208,47 @@ export const translations = {
     },
     experience: {
       title: "Evolution & Track Record",
-      subtitle: "A path oriented towards impact through rigorous design and systemic product vision.",
+      subtitle: "A journey through the years, where the intersection of business, design, and technology has allowed me to build scalable and high-impact digital products.",
       present: "Present",
       roles: [
         {
-          period: "2022 — Present",
-          title: "Lead Product Designer & Strategist",
-          company: "Various (High Complexity Consulting & Projects)",
-          description: "Leading end-to-end initiatives: from strategic Product Discovery to global systems architecture, operating as a consultative partner in digital transformation and AI-driven innovation."
+          period: "2026",
+          title: "Product Creator",
+          company: "Leal.co (current role)",
+          description: [
+            "I assume the role of Product Creator, combining product strategy, experience design, and technical execution with AI and full-stack development for Leal 360.",
+            "I define and build new features for the campaigns and automation engine (advanced campaigns, sending rules, decisions on whom and when to communicate), operating in all countries where Leal is present.",
+            "I work on loyalty personalization, fraud prevention rules, advanced segmentation, and B2B/B2C campaign experience on the Leal 360 platform."
+          ]
         },
         {
-          period: "2019 — 2022",
-          title: "Sr. UX/UI Designer → Product Design Lead",
-          company: "Key Tech Companies",
-          description: "Redesign of core flows and scalability of Design Systems. Deep collaboration with engineering teams to maintain consistency in agile delivery cycles."
+          period: "2025",
+          title: "Product Designer",
+          company: "Leal.co",
+          description: [
+            "Designed experiences, flows, components, and visuals for Leal 360, a customer data and marketing automation platform for retail in LATAM.",
+            "Created and evolved the design system used across Leal's products, helping reduce delivery times (powered by AI and design systems) and maintain consistency in multiple countries.",
+            "Collaborated with product, data, and technology teams on loyalty, campaign, segmentation, contactability, and operational rules affecting millions of users and hundreds of brands in the region."
+          ]
         },
         {
-          period: "2016 — 2019",
-          title: "Digital Designer",
-          company: "Agencies & B2C Startups",
-          description: "Crafting visual and interaction foundations. An early focus on retention, gamification, and aesthetics linked to brand results and engagement."
+          period: "2023–2024",
+          title: "Freelancer",
+          company: "Ludycom & Hipal (nights & weekends)",
+          description: [
+            "Redesigned Ludycom's web app (and its product HIPAL), creating the first version of their design system and modernizing the platform.",
+            "Managed to reduce support tickets by approximately 30–40%, improving usability and flow clarity for over 160 active merchants using the platform.",
+            "Worked independently in parallel with my main role, reinforcing my product builder profile with real SaaS B2B/B2C projects."
+          ]
+        },
+        {
+          period: "Before 2023",
+          title: "Core Experience",
+          company: "6+ years foundation",
+          description: [
+            "Accumulated over 6 years of professional experience across experience design, product, and independent projects, with emphasis on UX/UI, rapid prototyping, and digital systems.",
+            "Built a solid foundation for my current role: translating between business, design, and development, and using AI as an accelerator in discovery, design, and end-to-end execution."
+          ]
         }
       ]
     },
