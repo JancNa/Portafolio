@@ -441,13 +441,12 @@
   }
 }
 
-/* AI Contact Form (Based on Uiverse design) */
+/* AI Contact Form */
 .form-container {
   width: 100%;
   max-width: 400px;
-  background: var(--background) padding-box,
-              linear-gradient(145deg, transparent 35%,#a855f7, #ea580c) border-box;
-  border: 1.5px solid transparent;
+  background: var(--background);
+  border: 1px solid var(--border);
   padding: 24px;
   font-size: 14px;
   color: var(--foreground);
@@ -460,8 +459,8 @@
 }
 
 .dark .form-container {
-  background: #000000 padding-box,
-              linear-gradient(145deg, transparent 35%,#a855f7, #ea580c) border-box;
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .form-container .form {
